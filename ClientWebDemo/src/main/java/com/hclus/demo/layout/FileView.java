@@ -49,6 +49,9 @@ public class FileView extends VerticalLayout {
         add(title, fileNameField, loadButton, dendrogramDiv);
     }
 
+    /**
+     * Carica il dendrogramma dal file.
+     */
     private void loadDendrogram(){
         String fileName = fileNameField.getValue();
         String loadResponse = dendrogramService.loadDendrogramFromFile(fileName);

@@ -79,6 +79,9 @@ public class DbView extends VerticalLayout {
         add(title,inputLayout, sendButton, dendrogramDiv, fileNameField, saveButton);
     }
 
+    /**
+     * Genera il dendrogramma.
+     */
     private void generateDendrogram() {
         try {
             // prende i valori dai campi di input
@@ -115,6 +118,9 @@ public class DbView extends VerticalLayout {
         }
     }
 
+    /**
+     * Salva il dendrogramma.
+     */
     private void saveDendrogram() {
         // prende il nome del file e salva il dendrogramma
         String fileName = fileNameField.getValue();
