@@ -23,31 +23,21 @@ public class FileView extends VerticalLayout {
     private H1 title;
     /** Div per visualizzare il dendrogramma. */
     private Div dendrogramDiv;
+    /** Campo di input per il nome del file. */
+    private TextField fileNameField;
+    private Button loadButton;
 
     public FileView() {
-
         title = new H1("Carica Dendrogramma da File");
 
-        TextField fileNameField = new TextField("Nome del file:");
-        fileNameField.setPlaceholder("Inserisci il nome del file");
+        fileNameField = new TextField("Nome File:");
+        fileNameField.setPlaceholder("Inserisci file");
 
-        Button loadButton = new Button("Mostra");
+        loadButton = new Button("Mostra");
         dendrogramDiv = new Div();
 
         loadButton.addClickListener(event -> {
-            String fileName = fileNameField.getValue();
-            String loadResponse = dendrogramService.loadDendrogramFromFile(fileName);
-            //Notification.show("Dendrogramma caricato da: " + loadResponse);
-
-            // rimuove il contenuto esistente dal Div
-            dendrogramDiv.removeAll();
-
-            TextArea textArea = new TextArea();  // Crea una nuova TextArea
-            textArea.setValue(loadResponse);     // Imposta il testo nella TextArea
-            textArea.setReadOnly(true);          // Imposta la TextArea come sola lettura
-            textArea.setWidth("600px");          // Larghezza della TextArea
-            textArea.setHeight("350px");         // Altezza della TextArea
-            dendrogramDiv.add(textArea);
+            loadDendrogram();
         });
 
         HorizontalLayout inputLayout = new HorizontalLayout();
@@ -57,6 +47,22 @@ public class FileView extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
         add(title, fileNameField, loadButton, dendrogramDiv);
+    }
+
+    private void loadDendrogram(){
+        String fileName = fileNameField.getValue();
+        String loadResponse = dendrogramService.loadDendrogramFromFile(fileName);
+        //Notification.show("Dendrogramma caricato da: " + loadResponse);
+
+        // rimuove il contenuto esistente dal Div
+        dendrogramDiv.removeAll();
+
+        TextArea textArea = new TextArea();  // Crea una nuova TextArea
+        textArea.setValue(loadResponse);     // Imposta il testo nella TextArea
+        textArea.setReadOnly(true);          // Imposta la TextArea come sola lettura
+        textArea.setWidth("600px");          // Larghezza della TextArea
+        textArea.setHeight("350px");         // Altezza della TextArea
+        dendrogramDiv.add(textArea);
     }
 
 }
