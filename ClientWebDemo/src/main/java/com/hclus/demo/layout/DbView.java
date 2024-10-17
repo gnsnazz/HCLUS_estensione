@@ -1,7 +1,9 @@
 package com.hclus.demo.layout;
 
 import com.hclus.demo.controller.DendrogramService;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -43,10 +45,14 @@ public class DbView extends VerticalLayout {
 
         title = new H1("Carica Dendrogramma da Database");
         depthField = new TextField("Profondità");
+        depthField.setClearButtonVisible(true);
         depthField.setPlaceholder("Inserisci profondità");
+        depthField.setClearButtonVisible(true);
         tableNameField = new TextField("Tabella");
+        tableNameField.setClearButtonVisible(true);
         tableNameField.setPlaceholder("Nome tabella");
         fileNameField = new TextField("File");
+        fileNameField.setClearButtonVisible(true);
         fileNameField.setPlaceholder("Nome file");
         saveButton = new Button("Salva");
         sendButton = new Button("Genera");
@@ -57,10 +63,12 @@ public class DbView extends VerticalLayout {
         dTypeField.setItemLabelGenerator(item -> item == 1 ? "Single Link" : "Average Link");
         dTypeField.setPlaceholder("Seleziona tipo distanza");
 
+        sendButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         sendButton.addClickListener(event -> {
             generateDendrogram();
         });
 
+        saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         saveButton.addClickListener(event -> {
             saveDendrogram();
         });

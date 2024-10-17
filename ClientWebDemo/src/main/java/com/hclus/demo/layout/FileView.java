@@ -27,7 +27,9 @@ public class FileView extends VerticalLayout {
     private TextField fileNameField;
     private Button loadButton;
 
-    public FileView() {
+    public FileView(DendrogramService dendrogramService) {
+        this.dendrogramService = dendrogramService;
+
         title = new H1("Carica Dendrogramma da File");
 
         fileNameField = new TextField("Nome File:");
