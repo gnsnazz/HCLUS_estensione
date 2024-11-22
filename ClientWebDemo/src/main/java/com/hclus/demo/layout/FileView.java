@@ -4,12 +4,14 @@ import com.hclus.demo.controller.DendrogramService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 /**
  *  Classe che modella la visualizzazione da file.
@@ -33,6 +35,8 @@ public class FileView extends VerticalLayout {
         title = new H1("Carica Dendrogramma da File");
 
         fileNameField = new TextField("Nome File:");
+        fileNameField.setClearButtonVisible(true);
+
         fileNameField.setPlaceholder("Inserisci file");
 
         loadButton = new Button("Mostra");
@@ -56,18 +60,27 @@ public class FileView extends VerticalLayout {
      */
     private void loadDendrogram(){
         String fileName = fileNameField.getValue();
-        String loadResponse = dendrogramService.loadDendrogramFromFile(fileName);
-        //Notification.show("Dendrogramma caricato da: " + loadResponse);
-
+        //String loadResponse = dendrogramService.loadDendrogramFromFile(fileName);
+        if (fileName.isEmpty()) {
+            // Notifica l'utente se il campo è vuoto
+            Notification.show("Inserisci il nome del file.", 3000, Notification.Position.MIDDLE);
+            return;
+        }
         // rimuove il contenuto esistente dal Div
         dendrogramDiv.removeAll();
-
-        TextArea textArea = new TextArea();  // Crea una nuova TextArea
-        textArea.setValue(loadResponse);     // Imposta il testo nella TextArea
-        textArea.setReadOnly(true);          // Imposta la TextArea come sola lettura
-        textArea.setWidth("600px");          // Larghezza della TextArea
-        textArea.setHeight("350px");         // Altezza della TextArea
-        dendrogramDiv.add(textArea);
+        ResponseEntity<String> loadResponse = dendrogramService.loadDendrogramFromFile(fileName);
+        //Notification.show("Dendrogramma caricato da: " + loadResponse);
+        if (loadResponse.getStatusCode().is2xxSuccessful()) {
+            TextArea textArea = new TextArea();  // Crea una nuova TextArea
+            textArea.setValue(loadResponse.getBody());     // Imposta il testo nella TextArea
+            textArea.setReadOnly(true);          // Imposta la TextArea come sola lettura
+            textArea.setWidth("600px");          // Larghezza della TextArea
+            textArea.setHeight("350px");         // Altezza della TextArea
+            textArea.getStyle().set("border", "none");
+            dendrogramDiv.add(textArea);
+        } else {
+            Notification.show(loadResponse.getBody(), 3000, Notification.Position.MIDDLE);
+        }
     }
 
 }

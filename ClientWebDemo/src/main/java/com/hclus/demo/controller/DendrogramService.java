@@ -1,5 +1,8 @@
 package com.hclus.demo.controller;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,45 +17,45 @@ public class DendrogramService {
     }
 
     // Metodo per caricare il dendrogramma dal server
-    public String loadDendrogram(String tableName) {
+    public ResponseEntity<String> loadDendrogram(String tableName) {
         String url = serverUrl + "/load-data?tableName=" + tableName;
         try {
-            // Esegue una richiesta POST al server e ottiene la risposta
-            return restTemplate.postForObject(url, null, String.class);
+            // Esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
+            return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Errore durante il caricamento dei dati: " + e.getMessage();
+            return ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
     // Metodo per eseguire il clustering
-    public String mineDendrogram(int depth, int dType) {
+    public ResponseEntity<String> mineDendrogram(int depth, int dType) {
         String url = serverUrl + "/mine-dendrogram?depth=" + depth + "&distanceType=" + dType;
         try {
-            // Esegue una richiesta POST al server e ottiene la risposta
-            return restTemplate.postForObject(url, null, String.class);
+            // Esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
+            return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Errore durante il clustering: " + e.getMessage();
+            return ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
     // Metodo per caricare un dendrogramma da file
-    public String loadDendrogramFromFile(String fileName) {
+    public ResponseEntity<String> loadDendrogramFromFile(String fileName) {
         String url = serverUrl + "/load-file?fileName=" + fileName;
-
-            // Esegue una richiesta POST al server e ottiene la risposta
-        return restTemplate.postForObject(url, null, String.class);
-
+        try {
+            // Esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
+            return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
-    public String saveDendrogram(String fileName) {
+    public ResponseEntity<String> saveDendrogram(String fileName) {
         String url = serverUrl + "/save-file?fileName=" + fileName;
         try {
-            // Invoca il server per salvare il dendrogramma
-            return restTemplate.postForObject(url, null, String.class);
+            // Esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
+            return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (Exception e) {
-            return "Errore durante il salvataggio del dendrogramma: " + e.getMessage();
+            return ResponseEntity.status(500).body(e.getMessage());
         }
     }
 }

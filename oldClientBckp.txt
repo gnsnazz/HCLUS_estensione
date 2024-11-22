@@ -13,7 +13,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 
 /**
  *  Classe che modella la visualizzazione da database.
@@ -108,40 +107,41 @@ public class DbView extends VerticalLayout {
             dendrogramDiv.addClassName("centered-div");
 
             // carica i dati e genera il dendrogramma
-            //String loadResponse = dendrogramService.loadDendrogram(tableName);
-            ResponseEntity<String> loadResponse = dendrogramService.loadDendrogram(tableName);
+            String loadResponse = dendrogramService.loadDendrogram(tableName);
 
-            if (loadResponse.getStatusCode().is2xxSuccessful()) {
+            if (loadResponse.equals("OK")) {
                 // genera il dendrogramma
-                ResponseEntity<String> clusterResponse = dendrogramService.mineDendrogram(depth, dType);
-                if (clusterResponse.getStatusCode().is2xxSuccessful()) {
-                    // Mostra il dendrogramma
-                    textArea.setValue(clusterResponse.getBody());
-                    textArea.setReadOnly(true);
-                    textArea.setWidth("600px");
-                    textArea.setHeight("350px");
+                String clusterResponse = dendrogramService.mineDendrogram(depth, dType);
+                if (clusterResponse.contains("Errore")) {
+                    // Mostra il messaggio di errore
+                    Notification.show(clusterResponse,3000, Notification.Position.MIDDLE);
+                    // Nasconde il campo e il bottone per il salvataggio
+                    fileNameField.setVisible(false);
+                    saveButton.setVisible(false);
+                } else {
+                    // Mostra il risultato del clustering
+                    textArea.setValue(clusterResponse);  // imposta il testo nella TextArea
+                    textArea.setReadOnly(true);          // imposta la TextArea come sola lettura
+                    textArea.setWidth("600px");          // larghezza della TextArea
+                    textArea.setHeight("350px");         // altezza della TextArea
                     textArea.getStyle().set("border", "none");
+                    textArea.addClassName("cluster-textarea");
                     dendrogramDiv.add(textArea);
 
                     fileNameField.setVisible(true);
                     saveButton.setVisible(true);
-                } else {
-                    // Mostra il messaggio di errore
-                    Notification.show(clusterResponse.getBody(), 3000, Notification.Position.MIDDLE);
-                    fileNameField.setVisible(false);
-                    saveButton.setVisible(false);
                 }
 
             } else {
                 fileNameField.setVisible(false);
                 saveButton.setVisible(false);
-                Notification.show(loadResponse.getBody(),3000, Notification.Position.MIDDLE);
+                Notification.show(loadResponse,3000, Notification.Position.MIDDLE);
             }
 
         } catch (NumberFormatException e) {
             fileNameField.setVisible(false);
             saveButton.setVisible(false);
-            Notification.show("Inserisci valori validi per 'Profondità' e 'Tipo'.", 3000,  Notification.Position.MIDDLE);
+            Notification.show("Inserisci valori validi per 'Profondità' e 'Tipo'.");
         }
     }
 
@@ -151,9 +151,8 @@ public class DbView extends VerticalLayout {
     private void saveDendrogram() {
         // prende il nome del file e salva il dendrogramma
         String fileName = fileNameField.getValue();
-        //String saveResponse = dendrogramService.saveDendrogram(fileName);
-        ResponseEntity<String> saveResponseEntity = dendrogramService.saveDendrogram(fileName);
-        Notification.show(saveResponseEntity.getBody(), 3000,  Notification.Position.MIDDLE);
+        String saveResponse = dendrogramService.saveDendrogram(fileName);
+        Notification.show(saveResponse);
     }
 
 }

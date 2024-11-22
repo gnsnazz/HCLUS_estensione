@@ -25,7 +25,8 @@ public class AverageLinkDistance implements ClusterDistance {
 
         for (Integer integer : c1) {
             Example ex1 = d.getExample(integer);
-            for (Integer value : c2) sum += ex1.distance(d.getExample(value));
+            for (Integer value : c2)
+                sum += ex1.distance(d.getExample(value));
         }
 
         return sum / (c1.getSize() * c2.getSize());

@@ -1,0 +1,32 @@
+MAIN VIEW:
+tema scuro
+
+-descrizione
+-logo
+-titolo più grande
+-button grandi al centro della pagina
+-linea che parte dal titolo
+
+FILE VIEW:
+
+
+DB VIEW:
+dendrogramma generato più grande(il testo)
+button GENERA e SALVA più grandi
+
+mettere la barra di caricamento appena si clica il button genera,
+dopodiché sparisce appena appare il risutato.
+
+
+EROORI
+FILE VIEW
+verificare se il campo è vuoto, altrimenti messaggio di errore
+
+DB VIEW
+se metto profondità > degli esempi esce l'errore giusto nella text area ma su notification esce: clustering eseguito con successo
+
+aggiungere notification rosso con la x per gestire gli errori direttamente sulla pagin web
+
+eliminare la parte di salvataggio che appare sotto nel caso c'è un errore
+
+se non si inserisce il nome della tabella, invece gli altri due campi si, genera lo stesso

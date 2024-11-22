@@ -32,13 +32,13 @@ public class Data {
             this.data.addAll(examples);
 
         } catch (DatabaseConnectionException e) {
-            throw new NoDataException("Errore di connessione al database: " + e.getMessage() + "\n");
+            throw new NoDataException("Errore di connessione al database.\n");
         } catch (EmptySetException e) {
-            throw new NoDataException("La tabella " + tableName + " è vuota: " + e.getMessage() + "\n");
+            throw new NoDataException("La tabella " + tableName + " è vuota.\n");
         } catch (MissingNumberException e) {
-            throw new NoDataException("Errore durante l'elaborazione dei dati: " + e.getMessage() + "\n");
+            throw new NoDataException("Errore durante l'elaborazione dei dati.\n");
         } catch (SQLException e) {
-            throw new NoDataException("Errore SQL durante il recupero dei dati dalla tabella: " + e.getMessage() + "\n");
+            throw new NoDataException("Errore SQL durante il recupero dei dati dalla tabella: la tabella " + tableName + " non esiste.\n");
         }
     }
 

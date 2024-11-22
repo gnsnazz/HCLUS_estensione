@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 /**
  * Classe per gestire le richieste del client.
  */
@@ -41,12 +37,12 @@ public class ServerService {
      *
      * @return messaggio di stato
      */
-    public ResponseEntity<String> loadData(@RequestParam String tableName) {
+    public String loadData(@RequestParam String tableName) {
         try {
             this.data = new Data(tableName);
-            return ResponseEntity.ok("OK");
+            return "OK";
         } catch (NoDataException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage().replaceAll("[\\r\\n]+", ""));
+            return e.getMessage();
         }
     }
 
@@ -58,18 +54,18 @@ public class ServerService {
      *
      * @return rappresentazione del dendrogramma
      */
-    public ResponseEntity<String> performClustering(@RequestParam int depth, @RequestParam int distanceType) {
+    public String performClustering(@RequestParam int depth, @RequestParam int distanceType) {
         if (data == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dati non caricati.");
+            return "Dati non caricati";
         }
 
         try {
             this.clustering = new HierachicalClusterMiner(depth);
             ClusterDistance distance = distanceType == 1 ? new SingleLinkDistance() : new AverageLinkDistance();
             clustering.mine(data, distance);
-            return ResponseEntity.ok(clustering.toString(data));
+            return clustering.toString(data);
         } catch (InvalidSizeException | InvalidClustersNumberException | InvalidDepthException | IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage().replaceAll("[\\r\\n]+", ""));
+            return e.getMessage();
         }
     }
 
@@ -80,21 +76,22 @@ public class ServerService {
      *
      * @return rappresentazione del dendrogramma
      */
-    public ResponseEntity<String> loadDendrogramFromFile(@RequestParam String fileName) {
+    public String loadDendrogramFromFile(@RequestParam String fileName) {
         try {
             clustering = HierachicalClusterMiner.loadHierachicalClusterMiner(fileName);
+            //HierachicalClusterMiner savedCluster = HierachicalClusterMiner.loadHierachicalClusterMiner(fileName);
 
             if (data == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dati non caricati.");
+                return "Dati non caricati.";
             }
 
             if (clustering.getDepth() > data.getNumberOfExample()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: numero di esempi maggiore della profondità del dendrogramma!");
+                return "Errore: numero di esempi maggiore della profondità del dendrogramma!";
             } else {
-                return ResponseEntity.ok(clustering.toString(data));
+                return clustering.toString(data);
             }
         } catch (IOException | ClassNotFoundException | InvalidDepthException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage().replaceAll("[\\r\\n]+", ""));
+            return e.getMessage();
         }
     }
 
@@ -105,18 +102,18 @@ public class ServerService {
      *
      * @return messaggio di stato
      */
-    public ResponseEntity<String> saveDendrogram(@RequestParam String fileName) {
+    public String saveDendrogram(@RequestParam String fileName) {
         if (clustering == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: nessun dendrogramma disponibile per il salvataggio.");
+            return "Errore: nessun dendrogramma disponibile per il salvataggio.";
         }
 
         try {
-            clustering.salva(fileName);
-            return ResponseEntity.ok("Dendrogramma salvato correttamente.");
+            clustering.salva(fileName); // salva il dendrogramma precedentemente generato
+            return "Dendrogramma salvato correttamente.";
         } catch (FileAlreadyExistsException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Errore: Il file " + fileName + " esiste già.");
+            return "Errore: Il file " + fileName + " esiste già.";
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante il salvataggio del dendrogramma: " + e.getMessage().replaceAll("[\\r\\n]+", ""));
+            return "Errore durante il salvataggio del dendrogramma: " + e.getMessage();
         }
     }
 

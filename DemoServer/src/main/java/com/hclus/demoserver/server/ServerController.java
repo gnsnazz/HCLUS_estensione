@@ -1,6 +1,7 @@
 package com.hclus.demoserver.server;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,22 +23,22 @@ public class ServerController {
     }
 
     @PostMapping("/load-data")
-    public String loadData(@RequestParam String tableName) {
+    public ResponseEntity<String> loadData(@RequestParam String tableName) {
         return service.loadData(tableName);
     }
 
     @PostMapping("/mine-dendrogram")
-    public String performClustering(@RequestParam int depth, @RequestParam int distanceType) {
+    public ResponseEntity<String> performClustering(@RequestParam int depth, @RequestParam int distanceType) {
         return service.performClustering(depth, distanceType);
     }
 
     @PostMapping("/load-file")
-    public String loadDendrogramFromFile(@RequestParam String fileName) {
+    public ResponseEntity<String> loadDendrogramFromFile(@RequestParam String fileName) {
         return service.loadDendrogramFromFile(fileName);
     }
 
     @PostMapping("/save-file")
-    public String saveDendrogram(@RequestParam String fileName) {
+    public ResponseEntity<String> saveDendrogram(@RequestParam String fileName) {
         return service.saveDendrogram(fileName);
     }
 
