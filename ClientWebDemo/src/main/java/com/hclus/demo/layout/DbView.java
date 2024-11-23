@@ -9,6 +9,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -37,6 +38,8 @@ public class DbView extends VerticalLayout {
     private TextField fileNameField;
     /** Bottone per salvare il dendrogramma. */
     private Button saveButton;
+    /** Bottone per andare alla pagina precedente. */
+    private Button backButton;
     /** Campo di input per selezionare il tipo di distanza. */
     private ComboBox<Integer> dTypeField;
 
@@ -56,6 +59,7 @@ public class DbView extends VerticalLayout {
         fileNameField.setPlaceholder("Nome file");
         saveButton = new Button("Salva");
         sendButton = new Button("Genera");
+        backButton = new Button("Indietro");
         dendrogramDiv = new Div();
 
         dTypeField = new ComboBox<>("Distanza");
@@ -67,10 +71,15 @@ public class DbView extends VerticalLayout {
         sendButton.addClickListener(event -> {
             generateDendrogram();
         });
+        sendButton.addClickShortcut(Key.ENTER);
 
         saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
         saveButton.addClickListener(event -> {
             saveDendrogram();
+        });
+
+        backButton.addClickListener(event -> {
+            backwards();
         });
 
         fileNameField.setVisible(false);
@@ -84,7 +93,7 @@ public class DbView extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
         // aggiunge i componenti al layout
-        add(title,inputLayout, sendButton, dendrogramDiv, fileNameField, saveButton);
+        add(title,inputLayout, sendButton, dendrogramDiv, fileNameField, saveButton, backButton);
     }
 
     /**
@@ -121,6 +130,7 @@ public class DbView extends VerticalLayout {
                     textArea.setWidth("600px");
                     textArea.setHeight("350px");
                     textArea.getStyle().set("border", "none");
+                    textArea.getStyle().set("outline", "none");
                     dendrogramDiv.add(textArea);
 
                     fileNameField.setVisible(true);
@@ -156,4 +166,10 @@ public class DbView extends VerticalLayout {
         Notification.show(saveResponseEntity.getBody(), 3000,  Notification.Position.MIDDLE);
     }
 
+    /**
+     * Torna alla pagina precedente.
+     */
+    private void backwards() {
+        getUI().ifPresent(ui -> ui.navigate(""));
+    }
 }

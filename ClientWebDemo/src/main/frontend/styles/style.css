@@ -8,12 +8,6 @@ button:hover {
     background-color: #1558b3;
 }
 
-cluster-textarea {
-    border: none;
-    box-shadow: none;
-    outline: none;
-}
-
 load-textarea {
     border: none;
     box-shadow: none;
