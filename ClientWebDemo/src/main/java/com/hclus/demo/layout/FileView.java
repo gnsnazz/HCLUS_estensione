@@ -26,18 +26,24 @@ public class FileView extends VerticalLayout {
     /** Div per visualizzare il dendrogramma. */
     private Div dendrogramDiv;
     /** Campo di input per il nome del file. */
-    private TextField fileNameField;
+    private TextField fileName;
+    private TextField tableName;
     private Button loadButton;
+
 
     public FileView(DendrogramService dendrogramService) {
         this.dendrogramService = dendrogramService;
 
         title = new H1("Carica Dendrogramma da File");
 
-        fileNameField = new TextField("Nome File:");
-        fileNameField.setClearButtonVisible(true);
+        fileName = new TextField("Nome File:");
+        tableName = new TextField("Nome Tabella:");
 
-        fileNameField.setPlaceholder("Inserisci file");
+        fileName.setClearButtonVisible(true);
+        tableName.setClearButtonVisible(true);
+
+        fileName.setPlaceholder("Inserisci file");
+        tableName.setPlaceholder("Inserisci tabella");
 
         loadButton = new Button("Mostra");
         dendrogramDiv = new Div();
@@ -47,39 +53,44 @@ public class FileView extends VerticalLayout {
         });
 
         HorizontalLayout inputLayout = new HorizontalLayout();
-        inputLayout.add(fileNameField, loadButton);
+        inputLayout.add(fileName, tableName);
 
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        add(title, fileNameField, loadButton, dendrogramDiv);
+        add(title, inputLayout, loadButton, dendrogramDiv);
     }
 
     /**
      * Carica il dendrogramma dal file.
      */
     private void loadDendrogram(){
-        String fileName = fileNameField.getValue();
+        String file = fileName.getValue();
+        String table = tableName.getValue();
+        ResponseEntity<String> loadData = dendrogramService.loadDendrogram(table);
         //String loadResponse = dendrogramService.loadDendrogramFromFile(fileName);
-        if (fileName.isEmpty()) {
+        if (tableName.isEmpty() || fileName.isEmpty()) {
             // Notifica l'utente se il campo è vuoto
-            Notification.show("Inserisci il nome del file.", 3000, Notification.Position.MIDDLE);
+            Notification.show("Compila tutti i campi richiesti.", 3000, Notification.Position.MIDDLE);
             return;
         }
-        // rimuove il contenuto esistente dal Div
-        dendrogramDiv.removeAll();
-        ResponseEntity<String> loadResponse = dendrogramService.loadDendrogramFromFile(fileName);
-        //Notification.show("Dendrogramma caricato da: " + loadResponse);
-        if (loadResponse.getStatusCode().is2xxSuccessful()) {
-            TextArea textArea = new TextArea();  // Crea una nuova TextArea
-            textArea.setValue(loadResponse.getBody());     // Imposta il testo nella TextArea
-            textArea.setReadOnly(true);          // Imposta la TextArea come sola lettura
-            textArea.setWidth("600px");          // Larghezza della TextArea
-            textArea.setHeight("350px");         // Altezza della TextArea
-            textArea.getStyle().set("border", "none");
-            dendrogramDiv.add(textArea);
+        if(loadData.getStatusCode().is2xxSuccessful()){
+            // rimuove il contenuto esistente dal Div
+            dendrogramDiv.removeAll();
+            ResponseEntity<String> loadResponse = dendrogramService.loadDendrogramFromFile(file);
+            //Notification.show("Dendrogramma caricato da: " + loadResponse);
+            if (loadResponse.getStatusCode().is2xxSuccessful()) {
+                dendrogramDiv.setText(loadResponse.getBody());
+                dendrogramDiv.getStyle().set("white-space", "pre-wrap");
+                //dendrogramDiv.add(textArea);
+            } else {
+                dendrogramDiv.removeAll();
+                Notification.show(loadResponse.getBody(), 3000, Notification.Position.MIDDLE);
+            }
+
         } else {
-            Notification.show(loadResponse.getBody(), 3000, Notification.Position.MIDDLE);
+            dendrogramDiv.removeAll();
+            Notification.show(loadData.getBody(),3000, Notification.Position.MIDDLE);
         }
     }
 
