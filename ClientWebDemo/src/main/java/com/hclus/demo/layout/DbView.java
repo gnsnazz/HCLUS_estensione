@@ -125,13 +125,8 @@ public class DbView extends VerticalLayout {
                 ResponseEntity<String> clusterResponse = dendrogramService.mineDendrogram(depth, dType);
                 if (clusterResponse.getStatusCode().is2xxSuccessful()) {
                     // Mostra il dendrogramma
-                    textArea.setValue(clusterResponse.getBody());
-                    textArea.setReadOnly(true);
-                    textArea.setWidth("600px");
-                    textArea.setHeight("350px");
-                    textArea.getStyle().set("border", "none");
-                    textArea.getStyle().set("outline", "none");
-                    dendrogramDiv.add(textArea);
+                    dendrogramDiv.setText(clusterResponse.getBody());
+                    dendrogramDiv.getStyle().set("white-space", "pre-wrap");
 
                     fileNameField.setVisible(true);
                     saveButton.setVisible(true);
