@@ -43,7 +43,7 @@ public class MainView extends VerticalLayout {
         container.addClassName("container-div");
 
         // imposta l'allineamento al centro
-       setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
         add(title, container);
 
