@@ -18,7 +18,6 @@ import java.nio.file.FileAlreadyExistsException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 /**
  * Classe per gestire le richieste del client.

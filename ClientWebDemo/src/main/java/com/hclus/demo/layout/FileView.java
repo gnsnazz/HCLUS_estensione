@@ -7,7 +7,6 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,9 @@ public class FileView extends VerticalLayout {
     private Div dendrogramDiv;
     /** Campo di input per il nome del file. */
     private TextField fileName;
+    /** Campo di input per il nome della tabella. */
     private TextField tableName;
+    /** Bottone per caricare il dendrogramma. */
     private Button loadButton;
 
 

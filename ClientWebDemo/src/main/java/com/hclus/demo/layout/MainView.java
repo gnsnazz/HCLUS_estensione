@@ -1,17 +1,14 @@
 package com.hclus.demo.layout;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.theme.Theme;
 
 /**
  * Classe che modella la visualizzazione principale.
  */
 @Route("")
-//@CssImport("./styles/style.css")
 public class MainView extends VerticalLayout {
     /** Titolo della pagina. */
     private H1 title;

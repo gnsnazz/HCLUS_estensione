@@ -2,6 +2,7 @@ package com.hclus.demo.controller;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +24,7 @@ public class DendrogramService {
             // Esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -34,7 +35,7 @@ public class DendrogramService {
             // Esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -45,7 +46,7 @@ public class DendrogramService {
             // Esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -55,7 +56,7 @@ public class DendrogramService {
             // Esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }
