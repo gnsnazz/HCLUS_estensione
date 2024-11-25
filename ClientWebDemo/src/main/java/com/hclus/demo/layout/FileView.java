@@ -2,6 +2,7 @@ package com.hclus.demo.layout;
 
 import com.hclus.demo.controller.DendrogramService;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -30,7 +31,7 @@ public class FileView extends VerticalLayout {
     private TextField tableName;
     /** Bottone per caricare il dendrogramma. */
     private Button loadButton;
-
+    private Button backButton;
 
     public FileView(DendrogramService dendrogramService) {
         this.dendrogramService = dendrogramService;
@@ -52,6 +53,12 @@ public class FileView extends VerticalLayout {
         loadButton.addClickListener(event -> {
             loadDendrogram();
         });
+        loadButton.addClickShortcut(Key.ENTER);
+
+        backButton = new Button("Indietro");
+        backButton.addClickListener(event -> {
+            backwards();
+        });
 
         HorizontalLayout inputLayout = new HorizontalLayout();
         inputLayout.add(fileName, tableName);
@@ -59,7 +66,7 @@ public class FileView extends VerticalLayout {
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        add(title, inputLayout, loadButton, dendrogramDiv);
+        add(title, inputLayout, loadButton, dendrogramDiv, backButton);
     }
 
     /**
@@ -95,4 +102,10 @@ public class FileView extends VerticalLayout {
         }
     }
 
+    /**
+     * Torna alla pagina precedente.
+     */
+    private void backwards() {
+        getUI().ifPresent(ui -> ui.navigate(""));
+    }
 }
