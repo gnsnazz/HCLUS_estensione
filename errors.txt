@@ -18,7 +18,7 @@ mettere la barra di caricamento appena si clica il button genera,
 dopodiché sparisce appena appare il risutato.
 
 
-EROORI
+ERORI
 FILE VIEW
 verificare se il campo è vuoto, altrimenti messaggio di errore
 
@@ -30,3 +30,5 @@ aggiungere notification rosso con la x per gestire gli errori direttamente sulla
 eliminare la parte di salvataggio che appare sotto nel caso c'è un errore
 
 se non si inserisce il nome della tabella, invece gli altri due campi si, genera lo stesso
+
+Quando metti una profondità maggiore dei numeri di esempi della tabella il messaggi di errore è: Numero di esempi maggiore della profondità del dendrogramma!. Dovrebbe essere al contrario (da cambiare anche nella versione base)

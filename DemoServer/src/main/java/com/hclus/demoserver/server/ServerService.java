@@ -88,7 +88,7 @@ public class ServerService {
             }
 
             if (clustering.getDepth() > data.getNumberOfExample()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: numero di esempi maggiore della profondità del dendrogramma!");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profondità del dendrogramma maggiore del numero degli esempi!");
             } else {
                 return ResponseEntity.ok(clustering.toString(data));
             }
@@ -114,6 +114,8 @@ public class ServerService {
             return ResponseEntity.ok("Dendrogramma salvato correttamente.");
         } catch (FileAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Errore: Il file " + fileName + " esiste già.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante il salvataggio del dendrogramma: " + e.getMessage().replaceAll("[\\r\\n]+", ""));
         }

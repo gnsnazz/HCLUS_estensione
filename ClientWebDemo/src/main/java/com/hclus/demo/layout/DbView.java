@@ -7,7 +7,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -63,7 +62,7 @@ public class DbView extends VerticalLayout {
         dendrogramDiv = new Div();
 
         dTypeField = new ComboBox<>("Distanza");
-        dTypeField.setItems(1, 2); // aggiunge le opzioni per Single Link e Average Link
+        dTypeField.setItems(1, 2);  // aggiunge le opzioni per Single Link e Average Link
         dTypeField.setItemLabelGenerator(item -> item == 1 ? "Single Link" : "Average Link");
         dTypeField.setPlaceholder("Seleziona tipo distanza");
 
@@ -109,29 +108,26 @@ public class DbView extends VerticalLayout {
             String tableName = tableNameField.getValue();
             int depth = Integer.parseInt(depthField.getValue());
             int dType = Integer.parseInt(String.valueOf(dTypeField.getValue()));
-            TextArea textArea = new TextArea();  // crea una nuova TextArea
-            textArea.addClassName("cluster-textarea");
 
             // rimuove il contenuto esistente dal Div
             dendrogramDiv.removeAll();
             dendrogramDiv.addClassName("centered-div");
 
-            // carica i dati e genera il dendrogramma
-            //String loadResponse = dendrogramService.loadDendrogram(tableName);
-            ResponseEntity<String> loadResponse = dendrogramService.loadDendrogram(tableName);
+            // carica i dati
+            ResponseEntity<String> loadResponse = dendrogramService.loadData(tableName);
 
             if (loadResponse.getStatusCode().is2xxSuccessful()) {
                 // genera il dendrogramma
                 ResponseEntity<String> clusterResponse = dendrogramService.mineDendrogram(depth, dType);
                 if (clusterResponse.getStatusCode().is2xxSuccessful()) {
-                    // Mostra il dendrogramma
+                    // mostra il dendrogramma
                     dendrogramDiv.setText(clusterResponse.getBody());
                     dendrogramDiv.getStyle().set("white-space", "pre-wrap");
 
                     fileNameField.setVisible(true);
                     saveButton.setVisible(true);
                 } else {
-                    // Mostra il messaggio di errore
+                    // mostra il messaggio di errore
                     Notification.show(clusterResponse.getBody(), 3000, Notification.Position.MIDDLE);
                     fileNameField.setVisible(false);
                     saveButton.setVisible(false);

@@ -51,7 +51,7 @@ public class HierachicalClusterMiner implements Serializable {
 	 */
 	public void mine(Data data, ClusterDistance distance) throws InvalidDepthException, InvalidSizeException, InvalidClustersNumberException {
 		if (getDepth() > data.getNumberOfExample()) {
-			throw new InvalidDepthException("Numero di esempi maggiore della profondità del dendrogramma! \n");
+			throw new InvalidDepthException("Profondità del dendrogramma maggiore del numero degli esempi!\n");
 		}
 
 		ClusterSet level0 = new ClusterSet(data.getNumberOfExample());
@@ -110,7 +110,7 @@ public class HierachicalClusterMiner implements Serializable {
 	 */
 	public static HierachicalClusterMiner loadHierachicalClusterMiner(String fileName) throws IOException, ClassNotFoundException, IllegalArgumentException {
 		if (fileName == null || fileName.trim().isEmpty()) {
-			throw new IllegalArgumentException("Il nome del file non può essere vuoto o nullo");
+			throw new IllegalArgumentException("Il nome del file non può essere vuoto o nullo.");
 		}
 		String filePath = DIRECTORY_PATH + fileName;
 		File file = new File(filePath);
