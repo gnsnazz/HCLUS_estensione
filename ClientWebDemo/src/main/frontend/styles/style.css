@@ -11,9 +11,9 @@ h2 {
 }
 
 .button {
-    font-size: 20px; /* Cambia la dimensione del testo */
-    min-width: 130px; /* Larghezza minima */
-    min-height: 45px; /* Altezza minima */
+    font-size: 20px;
+    min-width: 130px;
+    min-height: 45px;
 }
 
 
