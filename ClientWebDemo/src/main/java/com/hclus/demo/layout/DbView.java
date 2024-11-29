@@ -48,18 +48,24 @@ public class DbView extends VerticalLayout {
 
         title = new H1("Dendrogramma da Database");
         depthField = new TextField("Profondità");
+        depthField.addClassName("button");
         depthField.setClearButtonVisible(true);
         depthField.setPlaceholder("Inserisci profondità");
         depthField.setClearButtonVisible(true);
         tableNameField = new TextField("Tabella");
+        tableNameField.addClassName("button");
         tableNameField.setClearButtonVisible(true);
         tableNameField.setPlaceholder("Nome tabella");
         fileNameField = new TextField("File");
+        fileNameField.addClassName("button");
         fileNameField.setClearButtonVisible(true);
         fileNameField.setPlaceholder("Nome file");
         saveButton = new Button("Salva");
+        saveButton.addClassName("button");
         sendButton = new Button("Genera");
+        sendButton.addClassName("button");
         backButton = new Button("Indietro");
+        backButton.addClassName("button");
         dendrogramDiv = new Div();
 
         dTypeField = new ComboBox<>("Distanza");
