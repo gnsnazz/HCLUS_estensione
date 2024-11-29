@@ -38,7 +38,9 @@ public class FileView extends VerticalLayout {
         title = new H1("Carica Dendrogramma da File");
 
         fileName = new TextField("Nome File:");
+        fileName.addClassName("button");
         tableName = new TextField("Nome Tabella:");
+        tableName.addClassName("button");
 
         fileName.setClearButtonVisible(true);
         tableName.setClearButtonVisible(true);
@@ -47,6 +49,8 @@ public class FileView extends VerticalLayout {
         tableName.setPlaceholder("Inserisci tabella");
 
         loadButton = new Button("Mostra");
+        loadButton.addClassName("button");
+
         dendrogramDiv = new Div();
 
         loadButton.addClickListener(event -> {
@@ -55,6 +59,7 @@ public class FileView extends VerticalLayout {
         loadButton.addClickShortcut(Key.ENTER);
 
         backButton = new Button("Indietro");
+        backButton.addClassName("button");
         backButton.addClickListener(event -> {
             backwards();
         });
