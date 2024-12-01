@@ -38,7 +38,7 @@ public class ServerService {
      *
      * @param tableName  nome della tabella
      *
-     * @return messaggio di stato
+     * @return risultato del caricamento
      */
     public ResponseEntity<String> loadData(@RequestParam String tableName) {
         try {
@@ -77,7 +77,7 @@ public class ServerService {
      *
      * @param fileName  nome del file
      *
-     * @return rappresentazione del dendrogramma
+     * @return risultato del caricamento da file
      */
     public ResponseEntity<String> loadDendrogramFromFile(@RequestParam String fileName) {
         try {
