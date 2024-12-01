@@ -3,6 +3,7 @@ package com.hclus.demo.layout;
 import com.hclus.demo.controller.DendrogramService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -39,9 +40,9 @@ public class FileView extends VerticalLayout {
 
         title = new H1("Dendrogramma da File");
         fileName = new TextField("Nome File:");
-        fileName.addClassName("button");
+        fileName.addClassName("field");
         tableName = new TextField("Nome Tabella:");
-        tableName.addClassName("button");
+        tableName.addClassName("field");
 
         fileName.setClearButtonVisible(true);
         tableName.setClearButtonVisible(true);
@@ -53,7 +54,7 @@ public class FileView extends VerticalLayout {
         loadButton.addClassName("button");
 
         dendrogramDiv = new Div();
-
+        loadButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         loadButton.addClickListener(event -> {
             loadDendrogram();
         });
@@ -82,7 +83,7 @@ public class FileView extends VerticalLayout {
         String table = tableName.getValue();
 
         if (tableName.isEmpty() || fileName.isEmpty()) {
-            // Notifica l'utente se il campo è vuoto
+            // notifica l'utente se i campi sono vuoti
             Notification.show("Compila tutti i campi richiesti.", 3000, Notification.Position.MIDDLE);
             return;
         }
@@ -95,7 +96,7 @@ public class FileView extends VerticalLayout {
             ResponseEntity<String> loadResponse = dendrogramService.loadDendrogramFromFile(file);
             if (loadResponse.getStatusCode().is2xxSuccessful()) {
                 dendrogramDiv.setText(loadResponse.getBody());
-                dendrogramDiv.getStyle().set("white-space", "pre-wrap");
+                dendrogramDiv.addClassName("custom-dendrogram");
             } else {
                 dendrogramDiv.removeAll();
                 Notification.show(loadResponse.getBody(), 3000, Notification.Position.MIDDLE);
