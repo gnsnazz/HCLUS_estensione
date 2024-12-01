@@ -1,34 +1,27 @@
 MAIN VIEW:
-tema scuro
-
+-tema scuro
 -descrizione
 -logo
 -titolo più grande
 -button grandi al centro della pagina
 -linea che parte dal titolo
 
-FILE VIEW:
+File vieW:
 
 
-DB VIEW:
-dendrogramma generato più grande(il testo)
-button GENERA e SALVA più grandi
-
-mettere la barra di caricamento appena si clica il button genera,
-dopodiché sparisce appena appare il risutato.
+Db View:
 
 
 ERORI
-FILE VIEW
-verificare se il campo è vuoto, altrimenti messaggio di errore
+File View
 
-DB VIEW
-se metto profondità > degli esempi esce l'errore giusto nella text area ma su notification esce: clustering eseguito con successo
+Db View
 
-aggiungere notification rosso con la x per gestire gli errori direttamente sulla pagin web
 
-eliminare la parte di salvataggio che appare sotto nel caso c'è un errore
-
-se non si inserisce il nome della tabella, invece gli altri due campi si, genera lo stesso
-
-Quando metti una profondità maggiore dei numeri di esempi della tabella il messaggi di errore è: Numero di esempi maggiore della profondità del dendrogramma!. Dovrebbe essere al contrario (da cambiare anche nella versione base)
+LAYOUT
+[fatto] - Eliminare Descrizione
+[fatto] - Modifica descrizone
+[fatto] - Campo distanza stessa dimensione delle altre
+[fatto] - Messaggio di errore quando il server è spento
+[?] - Quando si ricarica la pagina il tema diventa bianco(dovrebbe rimanere quello scelto)
+[?] - Tema scuro di default

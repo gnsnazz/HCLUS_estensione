@@ -47,16 +47,16 @@ public class DbView extends VerticalLayout {
 
         title = new H1("Dendrogramma da Database");
         depthField = new TextField("Profondità");
-        depthField.addClassName("button");
+        depthField.addClassName("field");
         depthField.setClearButtonVisible(true);
         depthField.setPlaceholder("Inserisci profondità");
         depthField.setClearButtonVisible(true);
         tableNameField = new TextField("Tabella");
-        tableNameField.addClassName("button");
+        tableNameField.addClassName("field");
         tableNameField.setClearButtonVisible(true);
         tableNameField.setPlaceholder("Nome tabella");
         fileNameField = new TextField("File");
-        fileNameField.addClassName("button");
+        fileNameField.addClassName("field");
         fileNameField.setClearButtonVisible(true);
         fileNameField.setPlaceholder("Nome file");
         saveButton = new Button("Salva");
@@ -71,6 +71,7 @@ public class DbView extends VerticalLayout {
         dTypeField.setItems(1, 2);  // aggiunge le opzioni per Single Link e Average Link
         dTypeField.setItemLabelGenerator(item -> item == 1 ? "Single Link" : "Average Link");
         dTypeField.setPlaceholder("Seleziona tipo distanza");
+        dTypeField.addClassName("field");
 
         sendButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         sendButton.addClickListener(event -> {
@@ -128,7 +129,7 @@ public class DbView extends VerticalLayout {
                 if (clusterResponse.getStatusCode().is2xxSuccessful()) {
                     // mostra il dendrogramma
                     dendrogramDiv.setText(clusterResponse.getBody());
-                    dendrogramDiv.getStyle().set("white-space", "pre-wrap");
+                    dendrogramDiv.addClassName("custom-dendrogram");
 
                     fileNameField.setVisible(true);
                     saveButton.setVisible(true);
@@ -158,7 +159,6 @@ public class DbView extends VerticalLayout {
     private void saveDendrogram() {
         // prende il nome del file e salva il dendrogramma
         String fileName = fileNameField.getValue();
-        //String saveResponse = dendrogramService.saveDendrogram(fileName);
         ResponseEntity<String> saveResponseEntity = dendrogramService.saveDendrogram(fileName);
         Notification.show(saveResponseEntity.getBody(), 3000,  Notification.Position.MIDDLE);
     }

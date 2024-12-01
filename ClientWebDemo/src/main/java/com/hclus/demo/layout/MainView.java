@@ -18,22 +18,16 @@ import com.vaadin.flow.component.button.Button;
 public class MainView extends VerticalLayout {
     /** Titolo della pagina. */
     private H1 title;
-
-    /** Bottone tema scuro. */
+    /** Bottone tema. */
     private Button toggleButton;
-
-    /** Sezioni della pagina. */
+    /** Sezione databse della pagina. */
     private Div loadFromDbSection;
+    /** Sezione file della pagina. */
     private Div loadFromFileSection;
-
-    /** Sottotitolo della pagina. */
-    private H2 subtitle;
-
     /** Paragrafo per la descrizione. */
     private Paragraph paragraph;
 
     public MainView() {
-
         title = new H1("H-CLUS");
 
         Div roundButton = new Div();
@@ -53,7 +47,7 @@ public class MainView extends VerticalLayout {
         Div roundButtonElement = (Div) toggleButton.getChildren().findFirst().orElse(null);
         if (themeList.contains(Lumo.DARK)) {
             if (roundButtonElement != null) {
-                roundButtonElement.addClassName("active"); // Aggiunge lo stato attivo
+                roundButtonElement.addClassName("active"); // aggiunge lo stato attivo
             }
         }
 
@@ -75,14 +69,12 @@ public class MainView extends VerticalLayout {
 
         loadFromDbSection = new Div("Apprendi da Database");
         loadFromDbSection.addClassName("section-div");
-        loadFromDbSection.addClassName("section-div:hover");
         loadFromDbSection.addClickListener(event -> {
             getUI().ifPresent(ui -> ui.navigate("load-data")); // naviga alla pagina di apprendimento dal database
         });
 
         loadFromFileSection = new Div("Carica da File");
         loadFromFileSection.addClassName("section-div");
-        loadFromFileSection.addClassName("section-div:hover");
         loadFromFileSection.addClickListener(event -> {
             getUI().ifPresent(ui -> ui.navigate("file-view")); // naviga alla pagina di caricamento da file
         });
@@ -90,15 +82,16 @@ public class MainView extends VerticalLayout {
         Div container = new Div(loadFromDbSection, loadFromFileSection);
         container.addClassName("container-div");
 
-        subtitle = new H2("Descrizione");
-
-        Paragraph paragraph = new Paragraph("Hierarchical clustering is a popular method for grouping objects. It creates groups so that objects within a group are similar to each other and different from objects in other groups. Clusters are visually represented in a hierarchical tree called a dendrogram.");
+        paragraph = new Paragraph("\n" +
+                "Il clustering agglomerativo è una tecnica di clustering gerarchico che inizia trattando ogni punto dati come un cluster separato, " +
+                "quindi procede unendo iterativamente i cluster più vicini fino a quando tutti i punti non appartengono a un unico grande cluster." +
+                "Il risultato è una struttura ad albero chiamata dendrogramma, che mostra come i cluster si uniscono progressivamente, offrendo una visione gerarchica dei dati.");
         paragraph.addClassName("custom-paragraph");
 
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        add(toggleButton, title, container, subtitle, paragraph);
+        add(toggleButton, title, container, paragraph);
 
     }
 }

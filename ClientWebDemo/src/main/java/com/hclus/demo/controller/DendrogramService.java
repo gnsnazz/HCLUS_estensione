@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -41,6 +42,8 @@ public class DendrogramService {
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (HttpStatusCodeException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
+        } catch (ResourceAccessException e) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Il server non è disponibile. Riprova più tardi.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante la richiesta " + e.getMessage());
         }
@@ -61,6 +64,8 @@ public class DendrogramService {
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (HttpStatusCodeException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
+        } catch (ResourceAccessException e) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Il server non è disponibile. Riprova più tardi.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -80,6 +85,8 @@ public class DendrogramService {
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (HttpStatusCodeException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
+        } catch (ResourceAccessException e) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Il server non è disponibile. Riprova più tardi.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -99,6 +106,8 @@ public class DendrogramService {
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
         } catch (HttpStatusCodeException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
+        } catch (ResourceAccessException e) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Il server non è disponibile. Riprova più tardi.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
