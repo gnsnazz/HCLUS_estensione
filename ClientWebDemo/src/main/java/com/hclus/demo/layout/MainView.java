@@ -1,11 +1,8 @@
 package com.hclus.demo.layout;
 
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.Lumo;
@@ -67,13 +64,27 @@ public class MainView extends VerticalLayout {
             }
         });
 
-        loadFromDbSection = new Div("Apprendi da Database");
+        Image dbIcon = new Image("images/db-icon2.svg", "Database Icon");
+        dbIcon.addClassName("db-icon");
+
+        VerticalLayout dbSectionLayout = new VerticalLayout();
+        dbSectionLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        dbSectionLayout.add(dbIcon, new Div(new H3("Apprendi da Database"))); // Immagine sopra il testo
+
+        loadFromDbSection = new Div(dbSectionLayout);
         loadFromDbSection.addClassName("section-div");
         loadFromDbSection.addClickListener(event -> {
             getUI().ifPresent(ui -> ui.navigate("load-data")); // naviga alla pagina di apprendimento dal database
         });
 
-        loadFromFileSection = new Div("Carica da File");
+        Image fileIcon = new Image("images/file-icon8.svg", "File Icon");
+        fileIcon.addClassName("file-icon");
+
+        VerticalLayout fileSectionLayout = new VerticalLayout();
+        fileSectionLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        fileSectionLayout.add(fileIcon, new Div(new H3("Carica da File"))); // Immagine sopra il testo
+
+        loadFromFileSection = new Div(fileSectionLayout);
         loadFromFileSection.addClassName("section-div");
         loadFromFileSection.addClickListener(event -> {
             getUI().ifPresent(ui -> ui.navigate("file-view")); // naviga alla pagina di caricamento da file
