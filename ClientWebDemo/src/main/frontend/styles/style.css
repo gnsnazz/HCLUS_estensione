@@ -122,7 +122,8 @@ div {
 }
 
 .theme-toggle {
-    top: 10px;
+    margin-top: 30px;
+    margin-right: 32px;
     right: 10px;
     width: 67px;
     height: 35px;
@@ -172,8 +173,7 @@ div {
     height: 100%;
     background-color: #2D3D52;
     border-radius: 50%;
-    transform: scale(0);
-    transition: all 0.6s;
+    transform: scale(1);
 }
 
 .round-button.active .toggle-ball  {
@@ -181,8 +181,7 @@ div {
 }
 
 .round-button.active .toggle-ball::before {
-    left: -10px;
-    transform: scale(1);
+    transform: scale(0);
 }
 
 .custom-dendrogram {
