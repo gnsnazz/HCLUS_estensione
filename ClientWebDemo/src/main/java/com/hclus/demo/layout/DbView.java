@@ -1,6 +1,7 @@
 package com.hclus.demo.layout;
 
 import com.hclus.demo.controller.DendrogramService;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
@@ -11,7 +12,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.lumo.Lumo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -90,6 +93,21 @@ public class DbView extends VerticalLayout {
 
         fileNameField.setVisible(false);
         saveButton.setVisible(false);
+
+        ThemeList themeList = UI.getCurrent().getElement().getThemeList();
+        UI.getCurrent().getPage().executeJs(
+                "return localStorage.getItem('theme');"
+        ).then(String.class, theme -> {
+            if ("dark".equals(theme)) {
+                // Imposta il tema scuro se 'dark' è salvato
+                themeList.add(Lumo.DARK);
+                UI.getCurrent().getElement().getClassList().add("dark-theme");
+            } else {
+                // Imposta il tema chiaro se non è 'dark'
+                themeList.remove(Lumo.DARK);
+                UI.getCurrent().getElement().getClassList().add("light-theme");
+            }
+        });
 
         // layout orizzontale per i campi di input e il bottone
         HorizontalLayout inputLayout = new HorizontalLayout();

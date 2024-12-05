@@ -21,6 +21,8 @@ public class MainView extends VerticalLayout {
     private Div loadFromDbSection;
     /** Sezione file della pagina. */
     private Div loadFromFileSection;
+    /** Sezione paragrafo e logo. */
+    private Div secondSection;
     /** Paragrafo per la descrizione. */
     private Paragraph paragraph;
 
@@ -42,25 +44,54 @@ public class MainView extends VerticalLayout {
 
         ThemeList themeList = UI.getCurrent().getElement().getThemeList();
         Div roundButtonElement = (Div) toggleButton.getChildren().findFirst().orElse(null);
-        if (themeList.contains(Lumo.DARK)) {
-            if (roundButtonElement != null) {
-                roundButtonElement.addClassName("active"); // aggiunge lo stato attivo
-            }
-        }
 
+
+        // Esegui JavaScript per leggere il valore dal localStorage
+        UI.getCurrent().getPage().executeJs(
+                "return localStorage.getItem('theme');"
+        ).then(String.class, theme -> {
+            if (theme == null) {
+                // Tema non impostato in localStorage
+                themeList.add(Lumo.DARK);
+                UI.getCurrent().getElement().getClassList().add("dark-theme");
+                UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
+            } else if ("dark".equals(theme)) {
+                // Imposta il tema scuro se 'dark' è salvato
+                themeList.add(Lumo.DARK);
+                UI.getCurrent().getElement().getClassList().add("dark-theme");
+            } else {
+                // Imposta il tema chiaro se non è 'dark'
+                themeList.remove(Lumo.DARK);
+                UI.getCurrent().getElement().getClassList().add("light-theme");
+            }
+            // Applica lo stato del pulsante in base al tema corrente
+            if (themeList.contains(Lumo.DARK)) {
+                if (roundButtonElement != null) {
+                    roundButtonElement.addClassName("active"); // aggiunge lo stato attivo
+                }
+            }
+        });
+
+// Aggiungi il listener per il click del pulsante
         toggleButton.addClickListener(click -> {
             if (themeList.contains(Lumo.DARK)) {
+                // Rimuovi il tema scuro
                 themeList.remove(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().remove("dark-theme");
                 if (roundButtonElement != null) {
                     roundButtonElement.removeClassName("active");
                 }
+                // Salva il tema chiaro in localStorage
+                UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'light');");
             } else {
+                // Aggiungi il tema scuro
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
                 if (roundButtonElement != null) {
                     roundButtonElement.addClassName("active");
                 }
+                // Salva il tema scuro in localStorage
+                UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
             }
         });
 
@@ -99,10 +130,13 @@ public class MainView extends VerticalLayout {
                 "Il risultato è una struttura ad albero chiamata dendrogramma, che mostra come i cluster si uniscono progressivamente, offrendo una visione gerarchica dei dati.");
         paragraph.addClassName("custom-paragraph");
 
+        secondSection = new Div(paragraph);
+        secondSection.addClassName("secondSection-div");
+
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        add(toggleButton, title, container, paragraph);
+        add(toggleButton, title, container, secondSection);
 
     }
 }
