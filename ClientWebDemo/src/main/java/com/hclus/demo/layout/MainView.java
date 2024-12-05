@@ -66,7 +66,7 @@ public class MainView extends VerticalLayout {
                 UI.getCurrent().getElement().getClassList().add("light-theme");
             }
             // Applica lo stato del pulsante in base al tema corrente
-            if (themeList.contains(Lumo.DARK)) {
+            if (themeList.contains(Lumo.LIGHT)) {
                 if (roundButtonElement != null) {
                     roundButtonElement.addClassName("active"); // aggiunge lo stato attivo
                 }
@@ -80,7 +80,7 @@ public class MainView extends VerticalLayout {
                 themeList.remove(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().remove("dark-theme");
                 if (roundButtonElement != null) {
-                    roundButtonElement.removeClassName("active");
+                    roundButtonElement.addClassName("active");
                 }
                 // Salva il tema chiaro in localStorage
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'light');");
@@ -89,7 +89,7 @@ public class MainView extends VerticalLayout {
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
                 if (roundButtonElement != null) {
-                    roundButtonElement.addClassName("active");
+                    roundButtonElement.removeClassName("active");
                 }
                 // Salva il tema scuro in localStorage
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
