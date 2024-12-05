@@ -22,7 +22,7 @@ public class MainView extends VerticalLayout {
     /** Sezione file della pagina. */
     private Div loadFromFileSection;
     /** Sezione paragrafo e logo. */
-    private Div secondSection;
+    private Div paragraphSection;
     /** Paragrafo per la descrizione. */
     private Paragraph paragraph;
 
@@ -46,8 +46,7 @@ public class MainView extends VerticalLayout {
         ThemeList themeList = UI.getCurrent().getElement().getThemeList();
         Div roundButtonElement = (Div) toggleButton.getChildren().findFirst().orElse(null);
 
-
-        // Esegui JavaScript per leggere il valore dal localStorage
+       // Esegui JavaScript per leggere il valore dal localStorage
         UI.getCurrent().getPage().executeJs(
                 "return localStorage.getItem('theme');"
         ).then(String.class, theme -> {
@@ -56,19 +55,19 @@ public class MainView extends VerticalLayout {
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
+                toggleBall.getStyle().set("opacity", "100%");
             } else if ("dark".equals(theme)) {
                 // Imposta il tema scuro se 'dark' è salvato
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
-            } else {
-                // Imposta il tema chiaro se non è 'dark'
-                themeList.remove(Lumo.DARK);
-                UI.getCurrent().getElement().getClassList().add("light-theme");
+                toggleBall.getStyle().set("opacity", "100%");
+            } else{
+                toggleBall.getStyle().set("opacity", "100%");
             }
             // Applica lo stato del pulsante in base al tema corrente
-            if (themeList.contains(Lumo.LIGHT)) {
+            if (themeList.contains(Lumo.DARK)) {
                 if (roundButtonElement != null) {
-                    roundButtonElement.addClassName("active"); // aggiunge lo stato attivo
+                    roundButtonElement.addClassName("fast-active"); // aggiunge lo stato attivo
                 }
             }
         });
@@ -80,7 +79,11 @@ public class MainView extends VerticalLayout {
                 themeList.remove(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().remove("dark-theme");
                 if (roundButtonElement != null) {
-                    roundButtonElement.addClassName("active");
+                    if(roundButtonElement.getClassName().equals("round-button fast-active")){
+                        roundButtonElement.removeClassName("fast-active");
+                    }else {
+                        roundButtonElement.removeClassName("active");
+                    }
                 }
                 // Salva il tema chiaro in localStorage
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'light');");
@@ -89,7 +92,7 @@ public class MainView extends VerticalLayout {
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
                 if (roundButtonElement != null) {
-                    roundButtonElement.removeClassName("active");
+                    roundButtonElement.addClassName("active");
                 }
                 // Salva il tema scuro in localStorage
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
@@ -131,13 +134,13 @@ public class MainView extends VerticalLayout {
                 "Il risultato è una struttura ad albero chiamata dendrogramma, che mostra come i cluster si uniscono progressivamente, offrendo una visione gerarchica dei dati.");
         paragraph.addClassName("custom-paragraph");
 
-        secondSection = new Div(paragraph);
-        secondSection.addClassName("secondSection-div");
+        paragraphSection = new Div(paragraph);
+        paragraphSection.addClassName("paragraphSection-div");
 
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        add(toggleButton, title, container, secondSection);
+        add(toggleButton, title, container, paragraphSection);
 
     }
 }
