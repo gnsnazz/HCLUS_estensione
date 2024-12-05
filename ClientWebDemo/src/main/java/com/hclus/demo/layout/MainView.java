@@ -48,24 +48,30 @@ public class MainView extends VerticalLayout {
         ThemeList themeList = UI.getCurrent().getElement().getThemeList();
         Div roundButtonElement = (Div) toggleButton.getChildren().findFirst().orElse(null);
 
+
         // Esegui JavaScript per leggere il valore dal localStorage
         UI.getCurrent().getPage().executeJs(
                 "return localStorage.getItem('theme');"
         ).then(String.class, theme -> {
-            if ("dark".equals(theme)) {
+            if (theme == null) {
+                // Tema non impostato in localStorage
+                themeList.add(Lumo.DARK);
+                UI.getCurrent().getElement().getClassList().add("dark-theme");
+                UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
+            } else if ("dark".equals(theme)) {
                 // Imposta il tema scuro se 'dark' è salvato
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
-                // Applica lo stato del pulsante in base al tema corrente
-                if (themeList.contains(Lumo.DARK)) {
-                    if (roundButtonElement != null) {
-                        roundButtonElement.addClassName("active"); // aggiunge lo stato attivo
-                    }
-                }
             } else {
                 // Imposta il tema chiaro se non è 'dark'
                 themeList.remove(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("light-theme");
+            }
+            // Applica lo stato del pulsante in base al tema corrente
+            if (themeList.contains(Lumo.DARK)) {
+                if (roundButtonElement != null) {
+                    roundButtonElement.addClassName("active"); // aggiunge lo stato attivo
+                }
             }
         });
 
