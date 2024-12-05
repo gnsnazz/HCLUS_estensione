@@ -25,3 +25,8 @@ LAYOUT
 [fatto] - Messaggio di errore quando il server è spento
 [?] - Quando si ricarica la pagina il tema diventa bianco(dovrebbe rimanere quello scelto)
 [?] - Tema scuro di default
+
+[FATTO]linea sotto il titolo
+logo da scegliere
+[FATTO]sfondo del paragrafo di sotto più chiaro
+[FATTO]transizione bottone

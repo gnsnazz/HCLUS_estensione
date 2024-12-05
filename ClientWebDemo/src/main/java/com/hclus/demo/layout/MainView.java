@@ -28,6 +28,7 @@ public class MainView extends VerticalLayout {
 
     public MainView() {
         title = new H1("H-CLUS");
+        title.addClassName("title");
 
         Div roundButton = new Div();
         roundButton.addClassName("round-button");
