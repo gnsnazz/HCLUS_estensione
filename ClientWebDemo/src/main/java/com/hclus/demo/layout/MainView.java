@@ -13,8 +13,6 @@ import com.vaadin.flow.component.button.Button;
  */
 @Route("")
 public class MainView extends VerticalLayout {
-    /** Titolo della pagina. */
-    private H1 title;
     /** Bottone tema. */
     private Button toggleButton;
     /** Sezione databse della pagina. */
@@ -26,8 +24,11 @@ public class MainView extends VerticalLayout {
     /** Paragrafo per la descrizione. */
     private Paragraph paragraph;
 
+    /**
+     * Costruttore della classe.
+     */
     public MainView() {
-        title = new H1("H-CLUS");
+        H1 title = new H1("H-CLUS");
         title.addClassName("title");
 
         Div roundButton = new Div();
@@ -46,7 +47,7 @@ public class MainView extends VerticalLayout {
         ThemeList themeList = UI.getCurrent().getElement().getThemeList();
         Div roundButtonElement = (Div) toggleButton.getChildren().findFirst().orElse(null);
 
-       // Esegui JavaScript per leggere il valore dal localStorage
+       // esegue JavaScript per leggere il valore dal localStorage
         UI.getCurrent().getPage().executeJs(
                 "return localStorage.getItem('theme');"
         ).then(String.class, theme -> {
@@ -57,14 +58,14 @@ public class MainView extends VerticalLayout {
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
                 toggleBall.getStyle().set("opacity", "100%");
             } else if ("dark".equals(theme)) {
-                // Imposta il tema scuro se 'dark' è salvato
+                // imposta il tema scuro se 'dark' è salvato
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
                 toggleBall.getStyle().set("opacity", "100%");
             } else{
                 toggleBall.getStyle().set("opacity", "100%");
             }
-            // Applica lo stato del pulsante in base al tema corrente
+            // applica lo stato del pulsante in base al tema corrente
             if (themeList.contains(Lumo.DARK)) {
                 if (roundButtonElement != null) {
                     roundButtonElement.addClassName("fast-active"); // aggiunge lo stato attivo
@@ -72,7 +73,7 @@ public class MainView extends VerticalLayout {
             }
         });
 
-// Aggiungi il listener per il click del pulsante
+        // aggiunge il listener per il click del pulsante
         toggleButton.addClickListener(click -> {
             if (themeList.contains(Lumo.DARK)) {
                 // Rimuovi il tema scuro
@@ -85,16 +86,16 @@ public class MainView extends VerticalLayout {
                         roundButtonElement.removeClassName("active");
                     }
                 }
-                // Salva il tema chiaro in localStorage
+                // salva il tema chiaro in localStorage
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'light');");
             } else {
-                // Aggiungi il tema scuro
+                // aggiungi il tema scuro
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
                 if (roundButtonElement != null) {
                     roundButtonElement.addClassName("active");
                 }
-                // Salva il tema scuro in localStorage
+                // salva il tema scuro in localStorage
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
             }
         });
@@ -104,7 +105,7 @@ public class MainView extends VerticalLayout {
 
         VerticalLayout dbSectionLayout = new VerticalLayout();
         dbSectionLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        dbSectionLayout.add(dbIcon, new Div(new H3("Apprendi da Database"))); // Immagine sopra il testo
+        dbSectionLayout.add(dbIcon, new Div(new H3("Apprendi da Database")));
 
         loadFromDbSection = new Div(dbSectionLayout);
         loadFromDbSection.addClassName("section-div");
@@ -117,7 +118,7 @@ public class MainView extends VerticalLayout {
 
         VerticalLayout fileSectionLayout = new VerticalLayout();
         fileSectionLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        fileSectionLayout.add(fileIcon, new Div(new H3("Carica da File"))); // Immagine sopra il testo
+        fileSectionLayout.add(fileIcon, new Div(new H3("Carica da File")));
 
         loadFromFileSection = new Div(fileSectionLayout);
         loadFromFileSection.addClassName("section-div");
@@ -139,8 +140,7 @@ public class MainView extends VerticalLayout {
 
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-
+        // aggiunge i componenti al layout
         add(toggleButton, title, container, paragraphSection);
-
     }
 }

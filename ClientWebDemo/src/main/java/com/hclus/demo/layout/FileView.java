@@ -25,8 +25,6 @@ public class FileView extends VerticalLayout {
     /** Servizio per il dendrogramma. */
     @Autowired
     private DendrogramService dendrogramService;
-    /** Titolo della pagina. */
-    private H1 title;
     /** Div per visualizzare il dendrogramma. */
     private Div dendrogramDiv;
     /** Campo di input per il nome del file. */
@@ -38,25 +36,32 @@ public class FileView extends VerticalLayout {
     /** Bottone per tornare indietro. */
     private Button backButton;
 
+    /**
+     * Costruttore della classe.
+     *
+     * @param dendrogramService  servizio per il dendrogramma
+     */
     public FileView(DendrogramService dendrogramService) {
         this.dendrogramService = dendrogramService;
 
-        title = new H1("Dendrogramma da File");
+        H1 title = new H1("Dendrogramma da File");
+
         fileName = new TextField("Nome File:");
         fileName.addClassName("field");
+        fileName.setPlaceholder("Inserisci file");
+
         tableName = new TextField("Nome Tabella:");
         tableName.addClassName("field");
+        tableName.setPlaceholder("Inserisci tabella");
 
         fileName.setClearButtonVisible(true);
         tableName.setClearButtonVisible(true);
-
-        fileName.setPlaceholder("Inserisci file");
-        tableName.setPlaceholder("Inserisci tabella");
 
         loadButton = new Button("Mostra");
         loadButton.addClassName("button");
 
         dendrogramDiv = new Div();
+
         loadButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         loadButton.addClickListener(event -> {
             loadDendrogram();
@@ -74,11 +79,11 @@ public class FileView extends VerticalLayout {
                 "return localStorage.getItem('theme');"
         ).then(String.class, theme -> {
             if ("dark".equals(theme)) {
-                // Imposta il tema scuro se 'dark' è salvato
+                // imposta il tema scuro se 'dark' è salvato
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
             } else {
-                // Imposta il tema chiaro se non è 'dark'
+                // imposta il tema chiaro se non è 'dark'
                 themeList.remove(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("light-theme");
             }
@@ -89,7 +94,7 @@ public class FileView extends VerticalLayout {
 
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-
+        // aggiunge i componenti al layout
         add(title, inputLayout, loadButton, dendrogramDiv, backButton);
     }
 
@@ -105,14 +110,15 @@ public class FileView extends VerticalLayout {
             Notification.show("Compila tutti i campi richiesti.", 3000, Notification.Position.MIDDLE);
             return;
         }
-
         ResponseEntity<String> loadData = dendrogramService.loadData(table);
 
         if(loadData.getStatusCode().is2xxSuccessful()){
             // rimuove il contenuto esistente dal Div
             dendrogramDiv.removeAll();
+            // carica il dendrogramma dal file
             ResponseEntity<String> loadResponse = dendrogramService.loadDendrogramFromFile(file);
             if (loadResponse.getStatusCode().is2xxSuccessful()) {
+                // mostra il dendrogramma
                 dendrogramDiv.setText(loadResponse.getBody());
                 dendrogramDiv.addClassName("custom-dendrogram");
             } else {

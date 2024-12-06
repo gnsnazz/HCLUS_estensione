@@ -26,55 +26,62 @@ public class DbView extends VerticalLayout {
     /** Servizio per il dendrogramma. */
     @Autowired
     private DendrogramService dendrogramService;
-    /** Titolo della pagina. */
-    private H1 title;
     /** Campo di input per la profondità. */
     private TextField depthField;
     /** Campo di input per il nome della tabella. */
-    private TextField tableNameField;
+    private TextField tableName;
     /** Bottone per inviare i dati. */
     private Button sendButton;
     /** Div per visualizzare il dendrogramma. */
     private Div dendrogramDiv;
     /** Campo di input per il nome del file. */
-    private TextField fileNameField;
+    private TextField fileName;
     /** Bottone per salvare il dendrogramma. */
     private Button saveButton;
     /** Bottone per andare alla pagina precedente. */
     private Button backButton;
     /** Campo di input per selezionare il tipo di distanza. */
-    private ComboBox<Integer> dTypeField;
+    private ComboBox<Integer> distanceType;
 
+    /**
+     * Costruttore della classe.
+     *
+     * @param dendrogramService  servizio per il dendrogramma
+     */
     public DbView(DendrogramService dendrogramService) {
         this.dendrogramService = dendrogramService;
 
-        title = new H1("Dendrogramma da Database");
+        H1 title = new H1("Dendrogramma da Database");
+
         depthField = new TextField("Profondità");
         depthField.addClassName("field");
-        depthField.setClearButtonVisible(true);
         depthField.setPlaceholder("Inserisci profondità");
         depthField.setClearButtonVisible(true);
-        tableNameField = new TextField("Tabella");
-        tableNameField.addClassName("field");
-        tableNameField.setClearButtonVisible(true);
-        tableNameField.setPlaceholder("Nome tabella");
-        fileNameField = new TextField("File");
-        fileNameField.addClassName("field");
-        fileNameField.setClearButtonVisible(true);
-        fileNameField.setPlaceholder("Nome file");
+
+        tableName = new TextField("Tabella");
+        tableName.addClassName("field");
+        tableName.setPlaceholder("Nome tabella");
+        tableName.setClearButtonVisible(true);
+
+        fileName = new TextField("File");
+        fileName.addClassName("field");
+        fileName.setPlaceholder("Nome file");
+        fileName.setClearButtonVisible(true);
+
         saveButton = new Button("Salva");
         saveButton.addClassName("button");
         sendButton = new Button("Genera");
         sendButton.addClassName("button");
         backButton = new Button("Indietro");
         backButton.addClassName("button");
+
         dendrogramDiv = new Div();
 
-        dTypeField = new ComboBox<>("Distanza");
-        dTypeField.setItems(1, 2);  // aggiunge le opzioni per Single Link e Average Link
-        dTypeField.setItemLabelGenerator(item -> item == 1 ? "Single Link" : "Average Link");
-        dTypeField.setPlaceholder("Seleziona tipo distanza");
-        dTypeField.addClassName("field");
+        distanceType = new ComboBox<>("Distanza");
+        distanceType.setItems(1, 2);  // aggiunge le opzioni per Single Link e Average Link
+        distanceType.setItemLabelGenerator(item -> item == 1 ? "Single Link" : "Average Link");
+        distanceType.setPlaceholder("Tipo distanza");
+        distanceType.addClassName("field");
 
         sendButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         sendButton.addClickListener(event -> {
@@ -91,7 +98,7 @@ public class DbView extends VerticalLayout {
             backwards();
         });
 
-        fileNameField.setVisible(false);
+        fileName.setVisible(false);
         saveButton.setVisible(false);
 
         ThemeList themeList = UI.getCurrent().getElement().getThemeList();
@@ -99,11 +106,11 @@ public class DbView extends VerticalLayout {
                 "return localStorage.getItem('theme');"
         ).then(String.class, theme -> {
             if ("dark".equals(theme)) {
-                // Imposta il tema scuro se 'dark' è salvato
+                // imposta il tema scuro se 'dark' è salvato
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
             } else {
-                // Imposta il tema chiaro se non è 'dark'
+                // imposta il tema chiaro se non è 'dark'
                 themeList.remove(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("light-theme");
             }
@@ -111,13 +118,13 @@ public class DbView extends VerticalLayout {
 
         // layout orizzontale per i campi di input e il bottone
         HorizontalLayout inputLayout = new HorizontalLayout();
-        inputLayout.add(tableNameField, depthField, dTypeField);
+        inputLayout.add(tableName, depthField, distanceType);
 
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
         // aggiunge i componenti al layout
-        add(title,inputLayout, sendButton, dendrogramDiv, fileNameField, saveButton, backButton);
+        add(title, inputLayout, sendButton, dendrogramDiv, fileName, saveButton, backButton);
     }
 
     /**
@@ -125,21 +132,21 @@ public class DbView extends VerticalLayout {
      */
     private void generateDendrogram() {
         try {
-            if (tableNameField.isEmpty() || depthField.isEmpty() || dTypeField.isEmpty()) {
+            if (tableName.isEmpty() || depthField.isEmpty() || distanceType.isEmpty()) {
                 Notification.show("Compila tutti i campi richiesti.", 3000, Notification.Position.MIDDLE);
                 return;
             }
             // prende i valori dai campi di input
-            String tableName = tableNameField.getValue();
+            String table = tableName.getValue();
             int depth = Integer.parseInt(depthField.getValue());
-            int dType = Integer.parseInt(String.valueOf(dTypeField.getValue()));
+            int dType = Integer.parseInt(String.valueOf(distanceType.getValue()));
 
             // rimuove il contenuto esistente dal Div
             dendrogramDiv.removeAll();
             dendrogramDiv.addClassName("centered-div");
 
             // carica i dati
-            ResponseEntity<String> loadResponse = dendrogramService.loadData(tableName);
+            ResponseEntity<String> loadResponse = dendrogramService.loadData(table);
 
             if (loadResponse.getStatusCode().is2xxSuccessful()) {
                 // genera il dendrogramma
@@ -149,23 +156,23 @@ public class DbView extends VerticalLayout {
                     dendrogramDiv.setText(clusterResponse.getBody());
                     dendrogramDiv.addClassName("custom-dendrogram");
 
-                    fileNameField.setVisible(true);
+                    fileName.setVisible(true);
                     saveButton.setVisible(true);
                 } else {
                     // mostra il messaggio di errore
                     Notification.show(clusterResponse.getBody(), 3000, Notification.Position.MIDDLE);
-                    fileNameField.setVisible(false);
+                    fileName.setVisible(false);
                     saveButton.setVisible(false);
                 }
 
             } else {
-                fileNameField.setVisible(false);
+                fileName.setVisible(false);
                 saveButton.setVisible(false);
                 Notification.show(loadResponse.getBody(),3000, Notification.Position.MIDDLE);
             }
 
         } catch (NumberFormatException e) {
-            fileNameField.setVisible(false);
+            fileName.setVisible(false);
             saveButton.setVisible(false);
             Notification.show("Inserisci valori validi per 'Profondità' e 'Tipo'.", 3000,  Notification.Position.MIDDLE);
         }
@@ -176,8 +183,8 @@ public class DbView extends VerticalLayout {
      */
     private void saveDendrogram() {
         // prende il nome del file e salva il dendrogramma
-        String fileName = fileNameField.getValue();
-        ResponseEntity<String> saveResponseEntity = dendrogramService.saveDendrogram(fileName);
+        String file = fileName.getValue();
+        ResponseEntity<String> saveResponseEntity = dendrogramService.saveDendrogram(file);
         Notification.show(saveResponseEntity.getBody(), 3000,  Notification.Position.MIDDLE);
     }
 

@@ -10,15 +10,13 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Classe che gestisce le richieste.
+ * Classe che gestisce le richieste al server.
  */
 @Service
 public class DendrogramService {
-    /**
-     * Oggetto per eseguire richieste HTTP. */
+    /** Oggetto per eseguire richieste HTTP. */
     private RestTemplate restTemplate;
-    /**
-     * URL base del server Spring Boot. */
+    /** URL base del server. */
     private String serverUrl = "http://localhost:8080";
 
     /**
