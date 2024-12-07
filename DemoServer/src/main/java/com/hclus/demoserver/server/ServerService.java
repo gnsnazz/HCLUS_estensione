@@ -1,6 +1,6 @@
 package com.hclus.demoserver.server;
 
-import com.hclus.demoserver.clustering.HierachicalClusterMiner;
+import com.hclus.demoserver.clustering.HierarchicalClusterMiner;
 import com.hclus.demoserver.clustering.InvalidClustersNumberException;
 import com.hclus.demoserver.clustering.InvalidDepthException;
 import com.hclus.demoserver.data.InvalidSizeException;
@@ -31,7 +31,7 @@ public class ServerService {
     /**
      * Oggetto per eseguire il clustering gerarchico.
      */
-    private HierachicalClusterMiner clustering;
+    private HierarchicalClusterMiner clustering;
 
     /**
      * Gestisce il caricamento dei dati dal database.
@@ -63,7 +63,7 @@ public class ServerService {
         }
 
         try {
-            this.clustering = new HierachicalClusterMiner(depth);
+            this.clustering = new HierarchicalClusterMiner(depth);
             ClusterDistance distance = distanceType == 1 ? new SingleLinkDistance() : new AverageLinkDistance();
             clustering.mine(data, distance);
             return ResponseEntity.ok(clustering.toString(data));
@@ -81,7 +81,7 @@ public class ServerService {
      */
     public ResponseEntity<String> loadDendrogramFromFile(@RequestParam String fileName) {
         try {
-            clustering = HierachicalClusterMiner.loadHierachicalClusterMiner(fileName);
+            clustering = HierarchicalClusterMiner.loadHierarchicalClusterMiner(fileName);
 
             if (data == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dati non caricati.");
