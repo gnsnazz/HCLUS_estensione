@@ -17,7 +17,7 @@ public class DendrogramService {
     /** Oggetto per eseguire richieste HTTP. */
     private RestTemplate restTemplate;
     /** URL base del server. */
-    private String serverUrl = "http://localhost:8080";
+    private final String SERVER_URL = "http://localhost:8080";
 
     /**
      * Costruttore della classe.
@@ -34,7 +34,7 @@ public class DendrogramService {
      * @return messaggio di stato
      */
     public ResponseEntity<String> loadData(String tableName) {
-        String url = serverUrl + "/load-data?tableName=" + tableName;
+        String url = SERVER_URL + "/load-data?tableName=" + tableName;
         try {
             // esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
@@ -56,7 +56,7 @@ public class DendrogramService {
      * @return rappresentazione del dendrogramma
      */
     public ResponseEntity<String> mineDendrogram(int depth, int dType) {
-        String url = serverUrl + "/mine-dendrogram?depth=" + depth + "&distanceType=" + dType;
+        String url = SERVER_URL + "/mine-dendrogram?depth=" + depth + "&distanceType=" + dType;
         try {
             // esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
@@ -77,7 +77,7 @@ public class DendrogramService {
      * @return rappresentazione del dendrogramma
      */
     public ResponseEntity<String> loadDendrogramFromFile(String fileName) {
-        String url = serverUrl + "/load-file?fileName=" + fileName;
+        String url = SERVER_URL + "/load-file?fileName=" + fileName;
         try {
             // esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);
@@ -98,7 +98,7 @@ public class DendrogramService {
      * @return messaggio di stato
      */
     public ResponseEntity<String> saveDendrogram(String fileName) {
-        String url = serverUrl + "/save-file?fileName=" + fileName;
+        String url = SERVER_URL + "/save-file?fileName=" + fileName;
         try {
             // esegue una richiesta POST al server e ottiene la risposta come ResponseEntity
             return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class);

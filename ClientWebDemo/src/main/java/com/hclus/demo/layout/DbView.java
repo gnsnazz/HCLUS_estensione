@@ -38,8 +38,6 @@ public class DbView extends VerticalLayout {
     private TextField fileName;
     /** Bottone per salvare il dendrogramma. */
     private Button saveButton;
-    /** Bottone per andare alla pagina precedente. */
-    private Button backButton;
     /** Campo di input per selezionare il tipo di distanza. */
     private ComboBox<Integer> distanceType;
 
@@ -72,7 +70,7 @@ public class DbView extends VerticalLayout {
         saveButton.addClassName("button");
         sendButton = new Button("Genera");
         sendButton.addClassName("button");
-        backButton = new Button("Indietro");
+        Button backButton = new Button("Indietro");
         backButton.addClassName("button");
 
         dendrogramDiv = new Div();

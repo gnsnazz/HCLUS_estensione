@@ -33,8 +33,6 @@ public class FileView extends VerticalLayout {
     private TextField tableName;
     /** Bottone per caricare il dendrogramma. */
     private Button loadButton;
-    /** Bottone per tornare indietro. */
-    private Button backButton;
 
     /**
      * Costruttore della classe.
@@ -68,7 +66,7 @@ public class FileView extends VerticalLayout {
         });
         loadButton.addClickShortcut(Key.ENTER);
 
-        backButton = new Button("Indietro");
+        Button backButton = new Button("Indietro");
         backButton.addClassName("button");
         backButton.addClickListener(event -> {
             backwards();

@@ -14,7 +14,7 @@ import com.vaadin.flow.component.button.Button;
 @Route("")
 public class MainView extends VerticalLayout {
     /** Bottone tema. */
-    private Button toggleButton;
+    private Button themeButton;
     /** Sezione databse della pagina. */
     private Div loadFromDbSection;
     /** Sezione file della pagina. */
@@ -29,6 +29,7 @@ public class MainView extends VerticalLayout {
      */
     public MainView() {
         H1 title = new H1("H-CLUS");
+        // aggiungere immagine con logo e titolo
         title.addClassName("title");
 
         Div roundButton = new Div();
@@ -41,18 +42,18 @@ public class MainView extends VerticalLayout {
         toggleSwitch.add(toggleBall);
         roundButton.add(toggleSwitch);
 
-        toggleButton = new Button(roundButton);
-        toggleButton.addClassName("theme-toggle");
+        themeButton = new Button(roundButton);
+        themeButton.addClassName("theme-toggle");
 
         ThemeList themeList = UI.getCurrent().getElement().getThemeList();
-        Div roundButtonElement = (Div) toggleButton.getChildren().findFirst().orElse(null);
+        Div roundButtonElement = (Div) themeButton.getChildren().findFirst().orElse(null);
 
        // esegue JavaScript per leggere il valore dal localStorage
         UI.getCurrent().getPage().executeJs(
                 "return localStorage.getItem('theme');"
         ).then(String.class, theme -> {
             if (theme == null) {
-                // Tema non impostato in localStorage
+                // tema non impostato in localStorage
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'dark');");
@@ -74,9 +75,9 @@ public class MainView extends VerticalLayout {
         });
 
         // aggiunge il listener per il click del pulsante
-        toggleButton.addClickListener(click -> {
+        themeButton.addClickListener(click -> {
             if (themeList.contains(Lumo.DARK)) {
-                // Rimuovi il tema scuro
+                // rimuove il tema scuro
                 themeList.remove(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().remove("dark-theme");
                 if (roundButtonElement != null) {
@@ -89,7 +90,7 @@ public class MainView extends VerticalLayout {
                 // salva il tema chiaro in localStorage
                 UI.getCurrent().getPage().executeJs("localStorage.setItem('theme', 'light');");
             } else {
-                // aggiungi il tema scuro
+                // aggiunge il tema scuro
                 themeList.add(Lumo.DARK);
                 UI.getCurrent().getElement().getClassList().add("dark-theme");
                 if (roundButtonElement != null) {
@@ -141,6 +142,6 @@ public class MainView extends VerticalLayout {
         // imposta l'allineamento al centro
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         // aggiunge i componenti al layout
-        add(toggleButton, title, container, paragraphSection);
+        add(themeButton, title, container, paragraphSection);
     }
 }
