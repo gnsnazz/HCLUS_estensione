@@ -43,7 +43,7 @@ public class DendrogramService {
         } catch (ResourceAccessException e) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Il server non è disponibile. Riprova più tardi.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante la richiesta " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
