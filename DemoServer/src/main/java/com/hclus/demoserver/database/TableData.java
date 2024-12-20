@@ -1,7 +1,6 @@
 package com.hclus.demoserver.database;
 
 import com.hclus.demoserver.data.Example;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

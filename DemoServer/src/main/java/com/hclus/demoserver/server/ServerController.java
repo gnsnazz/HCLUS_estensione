@@ -13,7 +13,7 @@ public class ServerController {
     private ServerService service;
 
     /**
-     * Costruttore della classe.
+     * Costruttore che inizializza il servizio.
      *
      * @param service  servizio per gestire le richieste
      */

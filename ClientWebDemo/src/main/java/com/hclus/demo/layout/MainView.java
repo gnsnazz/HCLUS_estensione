@@ -9,7 +9,7 @@ import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.component.button.Button;
 
 /**
- * Classe che modella la visualizzazione principale.
+ * Classe che modella la visualizzazione della pagina principale.
  */
 @Route("")
 public class MainView extends VerticalLayout {
@@ -144,4 +144,5 @@ public class MainView extends VerticalLayout {
         // aggiunge i componenti al layout
         add(themeButton, title, container, paragraphSection);
     }
+
 }

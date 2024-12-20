@@ -3,7 +3,6 @@ package com.hclus.demoserver.clustering;
 import com.hclus.demoserver.data.Data;
 import com.hclus.demoserver.data.InvalidSizeException;
 import com.hclus.demoserver.distance.ClusterDistance;
-
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.regex.Matcher;
@@ -11,8 +10,6 @@ import java.util.regex.Pattern;
 
 /**
  * Modella il processo di clustering.
- *
- * @author Nazz
  */
 public class HierarchicalClusterMiner implements Serializable {
 	/** Dendrogramma. */
@@ -100,7 +97,7 @@ public class HierarchicalClusterMiner implements Serializable {
 	/**
 	 * Carica un'istanza di HierarchicalClusterMiner da un file.
 	 *
-	 * @param  fileName nome del file da cui caricare l'istanza
+	 * @param fileName  nome del file da cui caricare l'istanza
 	 *
 	 * @return l'istanza caricata di HierarchicalClusterMiner
 	 *
@@ -131,7 +128,7 @@ public class HierarchicalClusterMiner implements Serializable {
 	/**
 	 * Salva l'istanza corrente di HierarchicalClusterMiner su un file.
 	 *
-	 * @param  fileName nome del file su cui salvare l'istanza
+	 * @param fileName  nome del file su cui salvare l'istanza
 	 *
 	 * @throws FileNotFoundException se il file non viene trovato
 	 * @throws IOException se si verifica un errore di input/output

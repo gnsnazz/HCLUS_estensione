@@ -2,15 +2,11 @@ package com.hclus.demoserver.clustering;
 
 import com.hclus.demoserver.data.Data;
 import com.hclus.demoserver.data.InvalidSizeException;
-
 import com.hclus.demoserver.distance.ClusterDistance;
-
 import java.io.Serializable;
 
 /**
  * Rappresenta un insieme di cluster.
- *
- * @author Nazz
  */
 class ClusterSet implements Serializable {
 	/** Insieme di cluster. */
@@ -42,7 +38,7 @@ class ClusterSet implements Serializable {
 	}
 
 	/**
-	 * Restituisce il cluster in posizione i.
+	 * Restituisce il cluster in una posizione specifica.
 	 *
 	 * @param i  indice del cluster da restituire
 	 *
@@ -67,7 +63,7 @@ class ClusterSet implements Serializable {
 		if (lastClusterIndex <= 1)
 			throw new InvalidClustersNumberException("Non ci sono abbastanza cluster da fondere.");
 
-		double minD = Double.MAX_VALUE;
+		double minDistance = Double.MAX_VALUE;
 		Cluster cluster1 = null;
 		Cluster cluster2 = null;
 
@@ -77,8 +73,8 @@ class ClusterSet implements Serializable {
 				Cluster c2 = get(j);
 				double d;
                 d = distance.distance(c1, c2, data);
-                if (d < minD) {
-                    minD = d;
+                if (d < minDistance) {
+                    minDistance = d;
                     cluster1 = c1;
                     cluster2 = c2;
                 }

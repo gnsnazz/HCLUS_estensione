@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 /**
- *  Classe che modella la visualizzazione da file.
+ * Classe che modella la visualizzazione della pagina da file.
  */
 @Route("file-view")
 public class FileView extends VerticalLayout {

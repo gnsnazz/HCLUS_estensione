@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 /**
- *  Classe che modella la visualizzazione da database.
+ * Classe che modella la visualizzazione della pagina da database.
  */
 @Route("load-data")
 public class DbView extends VerticalLayout {
@@ -192,4 +192,5 @@ public class DbView extends VerticalLayout {
     private void backwards() {
         getUI().ifPresent(ui -> ui.navigate(""));
     }
+
 }
