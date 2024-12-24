@@ -1,6 +1,7 @@
 package com.hclus.demo.layout;
 
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.dom.ThemeList;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.button.Button;
  * Classe che modella la visualizzazione della pagina principale.
  */
 @Route("")
+@CssImport("./styles/style.css")
 public class MainView extends VerticalLayout {
     /** Bottone tema. */
     private Button themeButton;

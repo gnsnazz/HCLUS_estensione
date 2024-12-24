@@ -1,0 +1,17 @@
+{
+  "frontendFolder": "C:/Users/nazim/Desktop/Uni/2ANNO/2semestre/Map/HCLUS_PROJECT/HCLUS_estensione/ClientWebDemo/./src/main/frontend",
+  "themeFolder": "themes",
+  "themeResourceFolder": "C:/Users/nazim/Desktop/Uni/2ANNO/2semestre/Map/HCLUS_PROJECT/HCLUS_estensione/ClientWebDemo/./src/main/frontend/generated/jar-resources",
+  "staticOutput": "C:/Users/nazim/Desktop/Uni/2ANNO/2semestre/Map/HCLUS_PROJECT/HCLUS_estensione/ClientWebDemo/target/classes/META-INF/VAADIN/webapp/VAADIN/static",
+  "generatedFolder": "generated",
+  "statsOutput": "C:\\Users\\nazim\\Desktop\\Uni\\2ANNO\\2semestre\\Map\\HCLUS_PROJECT\\HCLUS_estensione\\ClientWebDemo\\target\\classes\\META-INF\\VAADIN\\config",
+  "frontendBundleOutput": "C:\\Users\\nazim\\Desktop\\Uni\\2ANNO\\2semestre\\Map\\HCLUS_PROJECT\\HCLUS_estensione\\ClientWebDemo\\target\\classes\\META-INF\\VAADIN\\webapp",
+  "devBundleOutput": "C:/Users/nazim/Desktop/Uni/2ANNO/2semestre/Map/HCLUS_PROJECT/HCLUS_estensione/ClientWebDemo/target/dev-bundle/webapp",
+  "devBundleStatsOutput": "C:/Users/nazim/Desktop/Uni/2ANNO/2semestre/Map/HCLUS_PROJECT/HCLUS_estensione/ClientWebDemo/target/dev-bundle/config",
+  "jarResourcesFolder": "C:/Users/nazim/Desktop/Uni/2ANNO/2semestre/Map/HCLUS_PROJECT/HCLUS_estensione/ClientWebDemo/./src/main/frontend/generated/jar-resources",
+  "themeName": "",
+  "clientServiceWorkerSource": "C:\\Users\\nazim\\Desktop\\Uni\\2ANNO\\2semestre\\Map\\HCLUS_PROJECT\\HCLUS_estensione\\ClientWebDemo\\target\\sw.ts",
+  "pwaEnabled": false,
+  "offlineEnabled": false,
+  "offlinePath": "'offline.html'"
+}

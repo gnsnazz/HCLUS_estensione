@@ -5,6 +5,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -21,9 +22,9 @@ import org.springframework.http.ResponseEntity;
  * Classe che modella la visualizzazione della pagina da file.
  */
 @Route("file-view")
+@CssImport("./styles/style.css")
 public class FileView extends VerticalLayout {
     /** Servizio per il dendrogramma. */
-    @Autowired
     private DendrogramService dendrogramService;
     /** Div per visualizzare il dendrogramma. */
     private Div dendrogramDiv;

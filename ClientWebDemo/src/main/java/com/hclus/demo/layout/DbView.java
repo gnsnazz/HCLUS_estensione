@@ -4,6 +4,7 @@ import com.hclus.demo.controller.DendrogramService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -22,9 +23,9 @@ import org.springframework.http.ResponseEntity;
  * Classe che modella la visualizzazione della pagina da database.
  */
 @Route("load-data")
+@CssImport("./styles/style.css")
 public class DbView extends VerticalLayout {
     /** Servizio per il dendrogramma. */
-    @Autowired
     private DendrogramService dendrogramService;
     /** Campo di input per la profondità. */
     private TextField depthField;
