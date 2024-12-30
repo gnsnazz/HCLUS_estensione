@@ -6,7 +6,6 @@ set jarFile=%serverProjectPath%\build\libs\server.jar
 
 cd /d %serverProjectPath%
 
-echo Esecuzione del file JAR
 java -jar "%jarFile%"
 
 if errorlevel 1 (

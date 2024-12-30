@@ -4,7 +4,6 @@ setlocal enabledelayedexpansion
 set serverProjectPath=%~dp0ClientWebDemo
 set jarFile=%serverProjectPath%\build\libs\client.jar
 
-echo Esecuzione del file JAR
 java -jar "%jarFile%"
 
 if errorlevel 1 (
