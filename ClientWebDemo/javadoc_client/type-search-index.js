@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.hclus.demo","l":"Application"},{"p":"com.hclus.demo.layout","l":"DbView"},{"p":"com.hclus.demo.controller","l":"DendrogramService"},{"p":"com.hclus.demo.layout","l":"FileView"},{"p":"com.hclus.demo.layout","l":"MainView"}];updateSearchResults();

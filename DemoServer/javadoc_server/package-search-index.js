@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.hclus.demoserver"},{"l":"com.hclus.demoserver.clustering"},{"l":"com.hclus.demoserver.data"},{"l":"com.hclus.demoserver.database"},{"l":"com.hclus.demoserver.distance"},{"l":"com.hclus.demoserver.server"}];updateSearchResults();
