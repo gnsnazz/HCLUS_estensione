@@ -8,6 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class Application {
+	/**
+	 * Punto di partenza dell'applicazione server.
+	 *
+	 * @param args  argomenti passati da terminale
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
