@@ -16,7 +16,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.Lumo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -83,7 +82,7 @@ public class DbView extends VerticalLayout {
         distanceType.addClassName("field");
 
         sendButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        sendButton.addClickListener(event -> {
+        sendButton.addClickListener(_ -> {
             generateDendrogram();
         });
         sendButton.addClickShortcut(Key.ENTER);
