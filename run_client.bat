@@ -1,8 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set serverProjectPath=%~dp0ClientWebDemo
-set jarFile=%serverProjectPath%\build\libs\client.jar
+set baseProjectPath=%~dp0
+set jarFile=%baseProjectPath%\client.jar
 
 java -jar "%jarFile%"
 
